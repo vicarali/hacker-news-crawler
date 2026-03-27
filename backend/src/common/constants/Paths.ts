@@ -1,5 +1,3 @@
-import jetPaths from 'jet-paths';
-
 const Paths = {
   _: '/api',
   Users: {
@@ -9,7 +7,10 @@ const Paths = {
     Update: '/update',
     Delete: '/delete/:id',
   },
+  HackerNews: {
+    _: '/hacker-news',
+    Get: '/all',
+  },
 } as const;
 
-export const JetPaths = jetPaths(Paths);
 export default Paths;

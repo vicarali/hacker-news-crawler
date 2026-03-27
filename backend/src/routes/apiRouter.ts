@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import Paths from '@src/common/constants/Paths';
 
+import HackerNewsRoutes from './HackerNewsRoutes';
 import UserRoutes from './UserRoutes';
 
 /******************************************************************************
@@ -20,6 +21,14 @@ userRouter.put(Paths.Users.Update, UserRoutes.update);
 userRouter.delete(Paths.Users.Delete, UserRoutes.delete);
 
 apiRouter.use(Paths.Users._, userRouter);
+
+// ----------------------- Add HackerNewsRouter --------------------------------- //
+
+const hackerNewsRouter = Router();
+
+hackerNewsRouter.get(Paths.HackerNews.Get, HackerNewsRoutes.getAll);
+
+apiRouter.use(Paths.HackerNews._, hackerNewsRouter);
 
 /******************************************************************************
                                 Export
