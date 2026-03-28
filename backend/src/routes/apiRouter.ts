@@ -27,6 +27,14 @@ apiRouter.use(Paths.Users._, userRouter);
 const hackerNewsRouter = Router();
 
 hackerNewsRouter.get(Paths.HackerNews.Get, HackerNewsRoutes.getAll);
+hackerNewsRouter.get(
+  Paths.HackerNews.GetMoreThanFiveWords,
+  HackerNewsRoutes.getMoreThanFiveWords,
+);
+hackerNewsRouter.get(
+  Paths.HackerNews.GetLessOrEqualToFiveWords,
+  HackerNewsRoutes.getLessOrEqualToFiveWords,
+);
 
 apiRouter.use(Paths.HackerNews._, hackerNewsRouter);
 

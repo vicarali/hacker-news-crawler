@@ -4,7 +4,7 @@ import { HackerNewsItem } from '../services/common/hacker-news-types';
 
 const HACKER_NEWS_URL = 'https://news.ycombinator.com';
 
-async function getAll() {
+async function getAll(): Promise<HackerNewsItem[]> {
   const response = await fetch(HACKER_NEWS_URL);
   if (!response.ok)
     throw new Error(
@@ -13,6 +13,26 @@ async function getAll() {
 
   const html = await response.text();
   return scrapeHackerNews(html);
+}
+
+async function getEntriesWithMoreThanFiveWords(): Promise<HackerNewsItem[]> {
+  const hackerNews = await getAll();
+  const filteredHackerNews = hackerNews.filter(
+    (hackerNewsItem) => hackerNewsItem.title.split(' ').length > 5,
+  );
+
+  return filteredHackerNews.sort((a, b) => b.totalComments - a.totalComments);
+}
+
+async function getEntriesWithLessOrEqualToFiveWords(): Promise<
+  HackerNewsItem[]
+> {
+  const hackerNews = await getAll();
+  const filteredHackerNews = hackerNews.filter(
+    (hackerNewsItem) => hackerNewsItem.title.split(' ').length <= 5,
+  );
+
+  return filteredHackerNews.sort((a, b) => b.score - a.score);
 }
 
 function scrapeHackerNews(html: string): HackerNewsItem[] {
@@ -44,4 +64,8 @@ function formatCommentsTotal(text: string): number {
     );
 }
 
-export default { getAll };
+export default {
+  getAll,
+  getEntriesWithMoreThanFiveWords,
+  getEntriesWithLessOrEqualToFiveWords,
+};
