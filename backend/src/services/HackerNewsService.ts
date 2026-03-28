@@ -22,7 +22,7 @@ async function getAll(): Promise<HackerNewsItem[]> {
 
 async function getEntriesWithMoreThanFiveWords(): Promise<HackerNewsItem[]> {
   await storeRequest('moreThanFiveWords');
-  const hackerNews = await getAll();
+  const hackerNews = await HackerNewsService.getAll();
   const filteredHackerNews = hackerNews.filter(
     (hackerNewsItem) => countWords(hackerNewsItem.title) > 5,
   );
@@ -34,7 +34,7 @@ async function getEntriesWithLessOrEqualToFiveWords(): Promise<
   HackerNewsItem[]
 > {
   await storeRequest('lessOrEqualToFiveWords');
-  const hackerNews = await getAll();
+  const hackerNews = await HackerNewsService.getAll();
   const filteredHackerNews = hackerNews.filter(
     (hackerNewsItem) => countWords(hackerNewsItem.title) <= 5,
   );
@@ -86,8 +86,9 @@ function countWords(text: string): number {
   return textWithoutNonWordCharacters.split(' ').length;
 }
 
-export default {
+const HackerNewsService = {
   getAll,
   getEntriesWithMoreThanFiveWords,
   getEntriesWithLessOrEqualToFiveWords,
 };
+export default HackerNewsService;
