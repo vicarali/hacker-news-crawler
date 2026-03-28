@@ -18,7 +18,7 @@ async function getAll(): Promise<HackerNewsItem[]> {
 async function getEntriesWithMoreThanFiveWords(): Promise<HackerNewsItem[]> {
   const hackerNews = await getAll();
   const filteredHackerNews = hackerNews.filter(
-    (hackerNewsItem) => hackerNewsItem.title.split(' ').length > 5,
+    (hackerNewsItem) => countWords(hackerNewsItem.title) > 5,
   );
 
   return filteredHackerNews.sort((a, b) => b.totalComments - a.totalComments);
@@ -29,7 +29,7 @@ async function getEntriesWithLessOrEqualToFiveWords(): Promise<
 > {
   const hackerNews = await getAll();
   const filteredHackerNews = hackerNews.filter(
-    (hackerNewsItem) => hackerNewsItem.title.split(' ').length <= 5,
+    (hackerNewsItem) => countWords(hackerNewsItem.title) <= 5,
   );
 
   return filteredHackerNews.sort((a, b) => b.score - a.score);
@@ -62,6 +62,11 @@ function formatCommentsTotal(text: string): number {
     return parseInt(
       text.replace(/[\u00A0\n\r\t ]+/g, '').replace('comments', ''), // remove whitespace and comments string
     );
+}
+
+function countWords(text: string): number {
+  const textWithoutNonWordCharacters = text.replace(/[^a-zA-Z0-9\s]/g, '');
+  return textWithoutNonWordCharacters.split(' ').length;
 }
 
 export default {
