@@ -1,26 +1,20 @@
+import fs from 'fs';
 import jsonfile from 'jsonfile';
-import tspo from 'tspo';
 
-import EnvVars, { NodeEnvs } from '@src/common/constants/env';
-import { IUser } from '@src/models/User.model';
+import { Request } from '@src/models/Request.model';
 
 /******************************************************************************
                                 Constants
 ******************************************************************************/
 
-const DATABASE_FILE_PATH =
-  __dirname +
-  '/common' +
-  (EnvVars.NodeEnv === NodeEnvs.TEST
-    ? '/database.test.json'
-    : '/database.json');
+const DATABASE_FILE_PATH = __dirname + '/common/database.json';
 
 /******************************************************************************
                                 Types
 ******************************************************************************/
 
 type Database = {
-  users: IUser[];
+  requests: Request[];
 };
 
 /******************************************************************************
@@ -31,11 +25,11 @@ type Database = {
  * Fetch the json from the file.
  */
 async function openDb(): Promise<Database> {
-  const db = await (jsonfile.readFile(DATABASE_FILE_PATH) as Promise<Database>);
-  if (!('users' in db)) {
-    return tspo.addEntry(db, ['users', []]);
+  if (fs.existsSync(DATABASE_FILE_PATH)) {
+    return await (jsonfile.readFile(DATABASE_FILE_PATH) as Promise<Database>);
+  } else {
+    return { requests: [] } as Database;
   }
-  return db;
 }
 
 /**
@@ -45,13 +39,6 @@ function saveDb(db: Database): Promise<void> {
   return jsonfile.writeFile(DATABASE_FILE_PATH, db);
 }
 
-/**
- * Empty the database
- */
-function cleanDb(): Promise<void> {
-  return jsonfile.writeFile(DATABASE_FILE_PATH, {});
-}
-
 /******************************************************************************
                                 Export default
 ******************************************************************************/
@@ -59,5 +46,4 @@ function cleanDb(): Promise<void> {
 export default {
   openDb,
   saveDb,
-  cleanDb,
 } as const;
