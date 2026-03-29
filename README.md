@@ -1,6 +1,6 @@
-# Hacker News crawler backend
+# Hacker News crawler
 
-This project forms the backend for the Hacker News crawler app. was created with [express-generator-typescript](https://github.com/seanpmaxwell/express-generator-typescript).
+Hacker News crawler app that allows to list the latest 30 articles, including some filtering options.
 
 ## Main technologies used
 
