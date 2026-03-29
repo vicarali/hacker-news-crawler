@@ -1,6 +1,30 @@
-## About
+# Hacker News crawler backend
 
-This project was created with [express-generator-typescript](https://github.com/seanpmaxwell/express-generator-typescript).
+This project forms the backend for the Hacker News crawler app. was created with [express-generator-typescript](https://github.com/seanpmaxwell/express-generator-typescript).
+
+## Main technologies used
+
+- Node.js as the runtime environment
+- Express as the framework
+- TypeScript as the coding language
+- Vite as a bundler
+- Vitest as the unit test framework
+
+## Technical decisions
+
+- The Express framework has been chosen in order to simplify routing and API usage as a whole and error handling (including logs)
+- TypeScript is used instead of Vanilla JavaScript to enforce typing and to improve the robustness of the app
+- The usage of Vitest as the unit test framework was decided due to the great integration with Vite and easiness of use, since it follows the same syntax as Jest
+- The only unit tests created were in relation to the services, since they are the only elements that contain business logic
+- To do the initial setup of the project with all the required boilerplate, the [express-generator-typescript](https://github.com/seanpmaxwell/express-generator-typescript) npm package was used, which gives an initial structure and acts as a template to save some time
+- Since we only needed a database for the storage of simple logs (related to the usage of API endpoints) and to make it easily readable, the DBMS chosen has been simply the management of a local JSON file that gets automatically generated on the `src/repos/common/database.json`
+- The scrapping has been implemented using the native Fetch API to request the listing page, and the retrieval of required data is done via the `cheerio` npm package, which allows the selection of specific HTML elements easily
+
+### Architectural decisions
+
+- The architecture of the project followed more or less has been the MVC one, with separation of concerns in the form of services for the business logic, models for the definition of schema objects, repos for the database interaction and routes for the API endpoints managament
+- In this case, only some TypeScript types were set up as models, since we don't require any kind of validation given that the users do not input any data
+- For simplicity reasons and mainly due to the smallness of the project and the lack of data provided by users on the HTTP requests, route methods were used directly as controllers
 
 ## Available Scripts
 
