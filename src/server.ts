@@ -2,12 +2,14 @@ import express, { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
 import logger from 'jet-logger';
 import morgan from 'morgan';
+import swaggerUi from 'swagger-ui-express';
 
 import Paths from '@src/common/constants/Paths';
 import { RouteError } from '@src/common/utils/route-errors';
 import BaseRouter from '@src/routes/apiRouter';
 
 import EnvVars, { NodeEnvs } from './common/constants/env';
+import swaggerSpec from './swagger';
 
 /******************************************************************************
                                 Setup
@@ -44,6 +46,9 @@ app.use((err: Error, _: Request, res: Response, next: NextFunction) => {
   }
   return next(err);
 });
+
+// Add Swagger docs view
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 /******************************************************************************
                                 Export default

@@ -4,9 +4,13 @@ import HackerNewsService from '@src/services/HackerNewsService';
 import { Req, Res } from './common/express-types';
 
 /**
- * Get all Hacker News.
- *
- * @route GET /api/hacker-news/all
+ * @openapi
+ * /api/hacker-news/all:
+ *  get:
+ *    description: Get all Hacker News.
+ *    responses:
+ *      200:
+ *        description: Return list of the 30 most recent Hacker News
  */
 async function getAll(_: Req, res: Res) {
   const hackerNews = await HackerNewsService.getAll();
@@ -14,9 +18,13 @@ async function getAll(_: Req, res: Res) {
 }
 
 /**
- * Get all Hacker News with more than 5 words, ordered descending by total of comments.
- *
- * @route GET /api/hacker-news/more-than-5-words
+ * @openapi
+ * /api/hacker-news/more-than-5-words:
+ *  get:
+ *    description: Get all Hacker News with more than 5 words, ordered descending by total of comments.
+ *    responses:
+ *      200:
+ *        description: Return list from the 30 most recent Hacker News with more than 5 words in descending order by total of comments
  */
 async function getMoreThanFiveWords(_: Req, res: Res) {
   const hackerNews = await HackerNewsService.getEntriesWithMoreThanFiveWords();
@@ -24,9 +32,13 @@ async function getMoreThanFiveWords(_: Req, res: Res) {
 }
 
 /**
- * Get all Hacker News with less or equal to 5 words, ordered descending by score.
- *
- * @route GET /api/hacker-news/less-or-equal-to-5-words
+ * @openapi
+ * /api/hacker-news/less-or-equal-to-5-words:
+ *  get:
+ *    description: Get all Hacker News with less or equal to 5 words, ordered descending by score.
+ *    responses:
+ *      200:
+ *        description: Return list from the 30 most recent Hacker News with less or equal to 5 words in descending order by score
  */
 async function getLessOrEqualToFiveWords(_: Req, res: Res) {
   const hackerNews =

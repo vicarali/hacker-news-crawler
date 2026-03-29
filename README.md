@@ -9,6 +9,7 @@ This project forms the backend for the Hacker News crawler app. was created with
 - TypeScript as the coding language
 - Vite as a bundler
 - Vitest as the unit test framework
+- OpenAPI (Swagger) for the API specification and testing
 
 ## Technical decisions
 
@@ -25,6 +26,14 @@ This project forms the backend for the Hacker News crawler app. was created with
 - The architecture of the project followed more or less has been the MVC one, with separation of concerns in the form of services for the business logic, models for the definition of schema objects, repos for the database interaction and routes for the API endpoints managament
 - In this case, only some TypeScript types were set up as models, since we don't require any kind of validation given that the users do not input any data
 - For simplicity reasons and mainly due to the smallness of the project and the lack of data provided by users on the HTTP requests, route methods were used directly as controllers
+
+## How to run/test app
+
+In the next section there are more details on all the available operations regarding the app, but to keep it simple you would only need to do the following in order to test its functionality:
+
+1. Go to the project folder on a CLI terminal
+2. Run the script to launch the local/development environment: `npm run dev`
+3. Once the server finishes the startup process, you can head to the following URL on a browser that will load an OpenAPI (Swagger) specification page, in which you will be able to see all the different API endpoints and, of course, test them: http://localhost:3000/api/docs/
 
 ## Available Scripts
 
